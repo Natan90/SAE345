@@ -1,21 +1,23 @@
 from flask import Flask, request, render_template, redirect, url_for, abort, flash, session, g
-
 import pymysql.cursors
 
+import os
+from dotenv import load_dotenv
+
+load_dotenv("./sae345.env")
 def get_db():
     db = getattr(g, '_database', None)
     if db is None:
         #
         db = g._database = pymysql.connect(
-            host="localhost",
-            # host="serveurmysql",
-            user="nbouche",
-            password="mdp",
-            database="bdd_sae",
+            host=os.environ.get("HOST"),
+            user=os.environ.get("LOGIN"),
+            password=os.environ.get("PASSWORD"),
+            database=os.environ.get("DATABASE"),
             charset='utf8mb4',
             cursorclass=pymysql.cursors.DictCursor
+
         )
-        # à activer sur les machines personnelles :
         activate_db_options(db)
     return db
 
