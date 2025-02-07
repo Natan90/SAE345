@@ -21,7 +21,7 @@ from controllers.admin_type_equipement import *
 from controllers.admin_dataviz import *
 from controllers.admin_commentaire import *
 from controllers.client_liste_envies import *
-
+#test push
 app = Flask(__name__)
 app.secret_key = 'une cle(token) : grain de sel(any random string)'
 
