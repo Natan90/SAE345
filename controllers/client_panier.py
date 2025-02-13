@@ -18,12 +18,12 @@ def client_panier_add():
 
     sql = "SELECT * FROM LIGNE_PANIER WHERE id_equipement = %s AND id_utilisateur = %s"
     mycursor.execute(sql, (id_equipement, id_client))
-    casque_panier = mycursor.fetchone()
+    equipement_panier = mycursor.fetchone()
 
     mycursor.execute("SELECT * FROM EQUIPEMENT_SPORT WHERE id_equipement = %s", (id_equipement,))
-    casque = mycursor.fetchone()
+    equipement = mycursor.fetchone()
 
-    if not (casque_panier is None) and casque_panier['quantite'] >= 1:
+    if not (equipement_panier is None) and equipement_panier['quantite'] >= 1:
         turtle_update = (quantite, id_client, id_equipement)
         sql = "UPDATE LIGNE_PANIER SET quantite = quantite+%s WHERE id_utilisateur = %s AND id_equipement=%s"
         mycursor.execute(sql, turtle_update)
@@ -97,22 +97,22 @@ def client_panier_vider():
 def client_panier_delete_line():
     mycursor = get_db().cursor()
     id_client = session['id_user']
-    id_casque = request.form.get('id_casque')
-    # id_declinaison_casque = request.form.get('id_declinaison_casque')
+    id_equipement = request.form.get('id_equipement')
+    # id_declinaison_equipement = request.form.get('id_declinaison_equipement')
 
-    sql_quantite = "SELECT quantite FROM LIGNE_PANIER WHERE utilisateur_id = %s AND casque_id = %s"
-    mycursor.execute(sql_quantite, (id_client, id_casque))
+    sql_quantite = "SELECT quantite FROM LIGNE_PANIER WHERE id_utilisateur = %s AND id_equipement = %s"
+    mycursor.execute(sql_quantite, (id_client, id_equipement))
     quantite = mycursor.fetchone()
 
-    sql_delete_line = "DELETE FROM LIGNE_PANIER WHERE utilisateur_id = %s AND casque_id = %s"
-    mycursor.execute(sql_delete_line, (id_client, id_casque))
+    sql_delete_line = "DELETE FROM LIGNE_PANIER WHERE id_utilisateur = %s AND id_equipement = %s"
+    mycursor.execute(sql_delete_line, (id_client, id_equipement))
 
-    sql_update_stock = "UPDATE EQUIPEMENT_SPORT SET stock = stock + %s WHERE id_casque = %s"
-    mycursor.execute(sql_update_stock, (quantite['quantite'], id_casque))
+    sql_update_stock = "UPDATE EQUIPEMENT_SPORT SET stock = stock + %s WHERE id_equipement = %s"
+    mycursor.execute(sql_update_stock, (quantite['quantite'], id_equipement))
 
 
     get_db().commit()
-    return redirect('/client/casque/show')
+    return redirect('/client/equipement/show')
 
 @client_panier.route('/client/panier/filtre', methods=['POST'])
 def client_panier_filtre():
@@ -122,7 +122,7 @@ def client_panier_filtre():
     session['filter_types'] = request.form.getlist('filter_types')
     session['filter_taille'] = request.form.get('filter_taille', '').strip()
 
-    return redirect('/client/casque/show')
+    return redirect('/client/equipement/show')
 
 
 
@@ -137,5 +137,5 @@ def supprimer_filtre():
     session.pop('filter_taille', None)
 
 
-    return redirect('/client/casque/show')
+    return redirect('/client/equipement/show')
 

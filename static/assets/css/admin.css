@@ -1,0 +1,288 @@
+body {
+    overflow-y: scroll;
+    padding-right: 17px;
+    font-family: 'Malgun Gothic';
+    src: url('static/assets/Malgun-gothic.ttf');
+}
+
+
+
+nav.primary-navigation {
+    margin: 0 auto;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 15px;
+    'background-color: #efefef;
+    border-bottom: 2px solid #8254ff;
+    width: 99%;
+    'position: fixed;
+    top: 0;
+    font-size: 16px;
+    border-radius: 15px;
+    box-shadow: rgba(60, 64, 67, 0.3) 0px 1px 2px 0px, rgba(60, 64, 67, 0.15) 0px 2px 6px 2px;
+}
+
+nav.primary-navigation ul {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: flex;
+}
+
+nav.primary-navigation ul li {
+    margin: 0;
+    border-left: 2px solid #8254ff;
+    padding: 0 30px;
+    position: relative;
+    text-decoration: none;
+    text-align: center;
+    font-family: 'Arvo', serif;
+}
+
+nav.primary-navigation li a {
+    color: black;
+    text-decoration: none;
+}
+
+nav.primary-navigation li a:hover {
+    color: #8254ff;
+}
+
+nav.primary-navigation li:hover {
+    cursor: pointer;
+}
+
+nav.primary-navigation ul li ul {
+    visibility: hidden;
+    opacity: 0;
+    position: absolute;
+    padding-left: 0;
+    left: 0;
+    display: none;
+    background: white;
+}
+
+nav.primary-navigation ul li:hover > ul,
+nav.primary-navigation ul li ul:hover {
+    visibility: visible;
+    opacity: 1;
+    display: block;
+    min-width: 250px;
+    text-align: left;
+    padding-top: 20px;
+    box-shadow: 0px 3px 5px -1px #ccc;
+}
+
+nav.primary-navigation ul li ul li {
+    clear: both;
+    width: 100%;
+    text-align: left;
+    margin-bottom: 20px;
+    border-style: none;
+}
+
+nav.primary-navigation ul li ul li a:hover {
+    padding-left: 10px;
+    border-left: 2px solid #8254ff;
+    transition: all 0.3s ease;
+}
+
+nav.primary-navigation .left-items {
+    margin-right: auto;
+}
+
+nav.primary-navigation .right-items {
+    margin-left: auto;
+}
+
+a {
+    text-decoration: none;
+}
+
+a:hover {
+    color: #8254ff;
+}
+
+ul li ul li a {
+    transition: all 0.5s ease;
+}
+nav.primary-navigation .MenuClientTitre{
+    color: #8254ff;
+
+}
+/*------------------ADD/EDIT CASQUE-------------*/
+
+.add-casque-form{
+    width: 50%;
+    margin: auto;
+    box-shadow: 0px 3px 5px -1px #ccc;
+}
+
+
+.btn {
+    background-color: #8254ff;
+    color: #fff;
+    border: none;
+    padding: 8px 16px;
+    cursor: pointer;
+    border-radius: 5px;
+}
+
+.btn:hover {
+    background-color: #6b3fde;
+}
+input[type="text"],
+select {
+    width: 80px;
+    padding: 5px;
+    border-radius: 5px;
+    border: 1px solid #ccc;
+    font-size: 14px;
+}
+
+select {
+    width: auto;
+}
+
+input[type="checkbox"] {
+    margin-right: 5px;
+    transform: translateY(2px);
+}
+
+
+form {
+    align-items: center;
+}
+
+.btn-primary {
+    justify-content: space-between;
+}
+
+.btn-primary.secondary {
+    background-color: #ff6b6b;
+}
+
+.btn-primary.secondary:hover {
+    background-color: #ff4a4a;
+}
+
+.table {
+    width: 100%;
+    border-collapse: separate;
+    border-spacing: 0 10px;
+
+}
+
+.table th,
+.table td {
+    padding: 10px;
+    text-align: left;
+}
+tr{
+    box-shadow: rgba(60, 64, 67, 0.3) 0px 1px 2px 0px, rgba(60, 64, 67, 0.15) 0px 2px 6px 2px;
+    padding: 10px;
+    border-radius: 10px;
+}
+.btn {
+    padding: 6px 12px;
+    margin-right: 5px;
+    background-color: #8254ff;
+    color: #fff;
+    border: none;
+    border-radius: 3px;
+    cursor: pointer;
+}
+
+.btn:hover {
+    background-color: #6b3fde;
+}
+
+.btn-group {
+    margin-top: 10px;
+}
+
+.btn-continue {
+    display: block;
+    margin-top: 20px;
+    text-align: center;
+    padding: 10px 20px;
+    background-color: #8254ff;
+    color: #fff;
+    text-decoration: none;
+    border-radius: 3px;
+}
+
+.btn-continue:hover {
+    background-color: #6b3fde;
+}
+
+.total {
+    display: block;
+    margin-top: 20px;
+    font-weight: bold;
+}
+/* Stylisation du formulaire */
+.add-casque-form {
+    max-width: 500px;
+    padding: 20px;
+    background-color: #f9f9f9;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+}
+
+.add-casque-form label {
+    font-weight: bold;
+}
+
+.add-casque-form input[type="text"],
+.add-casque-form input[type="number"],
+.add-casque-form select {
+    width: 100%;
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 3px;
+    box-sizing: border-box;
+}
+
+.add-casque-form button {
+    padding: 10px 20px;
+    background-color: #007bff;
+    color: #fff;
+    border: none;
+    border-radius: 3px;
+    cursor: pointer;
+}
+
+.add-casque-form button:hover {
+    background-color: #0056b3;
+}
+
+.add-casque-form a.btn-secondary {
+    text-decoration: none;
+    color: #333;
+}
+
+.add-casque-form a.btn-secondary:hover {
+    color: #000;
+}
+
+/* Stylisation de l'image */
+#img_output {
+    width: 200px;
+    height: 200px;
+    border: 1px solid black;
+    padding: 25px;
+    margin-bottom: 20px;
+}
+
+/* Stylisation du fichier d'entrée */
+.add-casque-form input[type="file"] {
+    margin-bottom: 20px;
+}
+
+/* Stylisation des erreurs */
+.error-message {
+    color: red;
+    font-size: 14px;
+}

@@ -36,41 +36,38 @@ def client_commande_add():
     mycursor.execute(sql, (id_client,))
     items_ligne_panier = mycursor.fetchall()
 
-
     sql = "INSERT INTO COMMANDE (date_achat, id_utilisateur, id_etat) VALUES (%s, %s, 1)"
     mycursor.execute(sql, (datetime.now(), id_client))
-    commande_id = mycursor.lastrowid
-
+    id_commande = mycursor.lastrowid
 
     for item in items_ligne_panier:
-        sql = "INSERT INTO LIGNE_COMMANDE (commande_id, equipement_id, prix, quantite) VALUES (%s, %s, (SELECT prix_equipement FROM EQUIPEMENT_SPORT WHERE id_equipement = %s), %s)"
-        mycursor.execute(sql, (commande_id, item['id_equipement'], item['id_equipement'], item['quantite']))
+        sql = "INSERT INTO LIGNE_COMMANDE (id_commande, id_equipement, prix, quantite) VALUES (%s, %s, (SELECT prix_equipement FROM EQUIPEMENT_SPORT WHERE id_equipement = %s), %s)"
+        mycursor.execute(sql, (id_commande, item['id_equipement'], item['id_equipement'], item['quantite']))
 
-
-    sql = "DELETE FROM LIGNE_PANIER WHERE utilisateur_id = %s"
+    sql = "DELETE FROM LIGNE_PANIER WHERE id_utilisateur = %s"
     mycursor.execute(sql, (id_client,))
     get_db().commit()
 
     sql = '''
-            SELECT 
-                COMMANDE.id_commande, 
-                COMMANDE.date_achat, 
-                SUM(LIGNE_COMMANDE.quantite) AS nbr_equipement_sport, 
-                SUM(LIGNE_COMMANDE.prix * LIGNE_COMMANDE.quantite) AS prix_total, 
-                ETAT.libelle AS libelle
-            FROM 
+            SELECT
+                COMMANDE.id_commande,
+                COMMANDE.date_achat,
+                SUM(LIGNE_COMMANDE.quantite) AS nbr_equipement_sport,
+                SUM(LIGNE_COMMANDE.prix * LIGNE_COMMANDE.quantite) AS prix_total,
+                ETAT.libelle_etat AS libelle
+            FROM
                 COMMANDE
-            INNER JOIN 
-                LIGNE_COMMANDE ON COMMANDE.id_commande = LIGNE_COMMANDE.commande_id
-            INNER JOIN 
-                ETAT ON COMMANDE.etat_id = ETAT.id_etat
-            WHERE 
+            INNER JOIN
+                LIGNE_COMMANDE ON COMMANDE.id_commande = LIGNE_COMMANDE.id_commande
+            INNER JOIN
+                ETAT ON COMMANDE.id_etat = ETAT.id_etat
+            WHERE
                 COMMANDE.id_commande = %s
-            GROUP BY 
+            GROUP BY
                 COMMANDE.id_commande
             '''
 
-    mycursor.execute(sql, (commande_id,))
+    mycursor.execute(sql, (id_commande,))
     nouvelle_commande = mycursor.fetchone()
 
     commandes = [nouvelle_commande]
@@ -90,15 +87,15 @@ def client_commande_show():
             COMMANDE.date_achat, 
             SUM(LIGNE_COMMANDE.quantite) AS nbr_equipement_sport, 
             SUM(LIGNE_COMMANDE.prix * LIGNE_COMMANDE.quantite) AS prix_total, 
-            ETAT.libelle AS libelle
+            ETAT.libelle_etat AS libelle
         FROM 
             COMMANDE
         INNER JOIN 
-            LIGNE_COMMANDE ON COMMANDE.id_commande = LIGNE_COMMANDE.commande_id
+            LIGNE_COMMANDE ON COMMANDE.id_commande = LIGNE_COMMANDE.id_commande
         INNER JOIN 
-            ETAT ON COMMANDE.etat_id = etat.id_etat
+            ETAT ON COMMANDE.id_etat = ETAT.id_etat
         WHERE 
-            COMMANDE.utilisateur_id = %s
+            COMMANDE.id_utilisateur = %s
         GROUP BY 
             COMMANDE.id_commande
         '''
@@ -110,10 +107,10 @@ def client_commande_show():
 
     id_commande = request.args.get('id_commande', None)
     if id_commande:
-        sql = '''SELECT EQUIPEMENT_SPORT.nom AS nom, LIGNE_COMMANDE.quantite, LIGNE_COMMANDE.prix, (LIGNE_COMMANDE.quantite * LIGNE_COMMANDE.prix) AS prix_ligne
+        sql = '''SELECT EQUIPEMENT_SPORT.nom_equipement AS nom, LIGNE_COMMANDE.quantite, LIGNE_COMMANDE.prix, (LIGNE_COMMANDE.quantite * LIGNE_COMMANDE.prix) AS prix_ligne
                 FROM LIGNE_COMMANDE
-                INNER JOIN EQUIPEMENT_SPORT ON LIGNE_COMMANDE.equipement_id = EQUIPEMENT_SPORT.id_equipement
-                WHERE LIGNE_COMMANDE.commande_id = %s'''
+                INNER JOIN EQUIPEMENT_SPORT ON LIGNE_COMMANDE.id_equipement = EQUIPEMENT_SPORT.id_equipement
+                WHERE LIGNE_COMMANDE.id_commande = %s'''
 
         mycursor.execute(sql, (id_commande,))
         equipement_sport_commande = mycursor.fetchall()

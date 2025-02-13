@@ -11,10 +11,13 @@ admin_type_equipement = Blueprint('admin_type_equipement', __name__,
 @admin_type_equipement.route('/admin/type-equipement/show')
 def show_type_equipement():
     mycursor = get_db().cursor()
-    # sql = '''         '''
-    # mycursor.execute(sql)
-    # types_equipement = mycursor.fetchall()
-    types_equipement=[]
+    sql = '''  SELECT TYPE_EQUIPEMENT_SPORT.id_type_equipement_sport,libelle_type_equipement_sport,COUNT(id_equipement) AS nbr_equipements
+    FROM TYPE_EQUIPEMENT_SPORT 
+    JOIN EQUIPEMENT_SPORT 
+    ON EQUIPEMENT_SPORT.id_type_equipement_sport = TYPE_EQUIPEMENT_SPORT.id_type_equipement_sport 
+    GROUP BY TYPE_EQUIPEMENT_SPORT.id_type_equipement_sport,libelle_type_equipement_sport'''
+    mycursor.execute(sql)
+    types_equipement = mycursor.fetchall()
     return render_template('admin/type_equipement/show_type_equipement.html', types_equipement=types_equipement)
 
 @admin_type_equipement.route('/admin/type-equipement/add', methods=['GET'])

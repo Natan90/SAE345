@@ -10,10 +10,10 @@ def get_db():
     if db is None:
         #
         db = g._database = pymysql.connect(
-            host=os.environ.get("HOST"),
-            user=os.environ.get("LOGIN"),
-            password=os.environ.get("PASSWORD"),
-            database=os.environ.get("DATABASE"),
+            host="localhost",
+            user="emmanuel",
+            password="mdp",
+            database="SAE543",
             charset='utf8mb4',
             cursorclass=pymysql.cursors.DictCursor
 

@@ -1,0 +1,365 @@
+*{
+
+}
+body {
+    overflow-y: scroll;
+    padding-right: 17px;
+    font-family: 'Malgun Gothic';
+    src: url('static/assets/Malgun-gothic.ttf');
+}
+
+
+
+nav.primary-navigation {
+    margin: 0 auto;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 15px;
+    'background-color: #efefef;
+    border-bottom: 2px solid #8254ff;
+    width: 99%;
+    'position: fixed;
+    top: 0;
+    font-size: 16px;
+    border-radius: 15px;
+    box-shadow: rgba(60, 64, 67, 0.3) 0px 1px 2px 0px, rgba(60, 64, 67, 0.15) 0px 2px 6px 2px;
+}
+
+nav.primary-navigation ul {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: flex;
+}
+
+nav.primary-navigation ul li {
+    margin: 0;
+    border-left: 2px solid #8254ff;
+    padding: 0 30px;
+    position: relative;
+    text-decoration: none;
+    text-align: center;
+    font-family: 'Arvo', serif;
+}
+
+nav.primary-navigation li a {
+    color: black;
+    text-decoration: none;
+}
+
+nav.primary-navigation li a:hover {
+    color: #8254ff;
+}
+
+nav.primary-navigation li:hover {
+    cursor: pointer;
+}
+
+nav.primary-navigation ul li ul {
+    visibility: hidden;
+    opacity: 0;
+    position: absolute;
+    padding-left: 0;
+    left: 0;
+    display: none;
+    background: white;
+}
+
+nav.primary-navigation ul li:hover > ul,
+nav.primary-navigation ul li ul:hover {
+    visibility: visible;
+    opacity: 1;
+    display: block;
+    min-width: 250px;
+    text-align: left;
+    padding-top: 20px;
+    box-shadow: 0px 3px 5px -1px #ccc;
+}
+
+nav.primary-navigation ul li ul li {
+    clear: both;
+    width: 100%;
+    text-align: left;
+    margin-bottom: 20px;
+    border-style: none;
+}
+
+nav.primary-navigation ul li ul li a:hover {
+    padding-left: 10px;
+    border-left: 2px solid #8254ff;
+    transition: all 0.3s ease;
+}
+
+nav.primary-navigation .left-items {
+    margin-right: auto;
+}
+
+nav.primary-navigation .right-items {
+    margin-left: auto;
+}
+
+a {
+    text-decoration: none;
+}
+
+a:hover {
+    color: #8254ff;
+}
+
+ul li ul li a {
+    transition: all 0.5s ease;
+}
+nav.primary-navigation .MenuClientTitre{
+    color: #8254ff;
+
+}
+
+
+.row-align-self-right{
+    display: flex;
+    margin-top: 50px;
+    margin-right: 0;
+}
+
+.container{
+}
+.corps{
+    width: 70%;
+    margin: auto;
+}
+
+/*-------------CSS FILTRE-------------*/
+
+
+.filtre{
+    box-shadow: rgba(60, 64, 67, 0.3) 0px 1px 2px 0px, rgba(60, 64, 67, 0.15) 0px 2px 6px 2px;
+    padding: 10px 50px 10px 20px;
+    /*haut droite bas gauche*/
+    border-radius:10px;
+    margin-right: 0;
+    top: 0;
+    right: 0;
+}
+.col{
+    margin-left: 50px;
+}
+
+.form-group {
+    margin-bottom: 10px;
+    margin-right: 20px;
+}
+
+h4, h5 {
+    margin-bottom: 5px;
+}
+
+.btn {
+    background-color: #8254ff;
+    color: #fff;
+    border: none;
+    padding: 8px 16px;
+    cursor: pointer;
+    border-radius: 5px;
+}
+
+.btn:hover {
+    background-color: #6b3fde;
+}
+input[type="text"],
+select {
+    width: 80px;
+    padding: 5px;
+    border-radius: 5px;
+    border: 1px solid #ccc;
+    font-size: 14px;
+}
+
+select {
+    width: auto;
+}
+
+input[type="checkbox"] {
+    margin-right: 5px;
+    transform: translateY(2px);
+}
+
+
+form {
+    display: flex;
+    align-items: center;
+}
+
+.btn-primary {
+    justify-content: space-between;
+}
+
+.btn-primary.secondary {
+    background-color: #ff6b6b;
+}
+
+.btn-primary.secondary:hover {
+    background-color: #ff4a4a;
+}
+
+/*-------------CSS PANIER-------------*/
+
+
+.panier {
+    margin-top: 20px;
+}
+
+.table {
+    width: 100%;
+    border-collapse: separate;
+    border-spacing: 0 10px;
+
+}
+
+.table th,
+.table td {
+    padding: 10px;
+    text-align: left;
+}
+tr{
+    box-shadow: rgba(60, 64, 67, 0.3) 0px 1px 2px 0px, rgba(60, 64, 67, 0.15) 0px 2px 6px 2px;
+    padding: 10px;
+    border-radius: 10px;
+}
+.btn {
+    padding: 6px 12px;
+    margin-right: 5px;
+    background-color: #8254ff;
+    color: #fff;
+    border: none;
+    border-radius: 3px;
+    cursor: pointer;
+}
+
+.btn:hover {
+    background-color: #6b3fde;
+}
+
+.btn-group {
+    margin-top: 10px;
+}
+
+.btn-continue {
+    display: block;
+    margin-top: 20px;
+    text-align: center;
+    padding: 10px 20px;
+    background-color: #8254ff;
+    color: #fff;
+    text-decoration: none;
+    border-radius: 3px;
+}
+
+.btn-continue:hover {
+    background-color: #6b3fde;
+}
+
+.total {
+    display: block;
+    margin-top: 20px;
+    font-weight: bold;
+}
+
+
+/*-----------CSS CARTES-----------*/
+
+.card {
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    margin-bottom: 20px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.card-body {
+    padding: 15px;
+}
+
+.card-title {
+    font-size: 18px;
+    margin-bottom: 10px;
+}
+
+.card-footer {
+    padding: 10px 15px;
+    background-color: #f8f9fa;
+    border-top: 1px solid #ccc;
+    border-radius: 0 0 5px 5px;
+}
+
+.card-footer small {
+    color: #6c757d;
+}
+
+.card-footer a {
+    color: #007bff;
+    text-decoration: none;
+}
+
+.card-footer a:hover {
+    text-decoration: underline;
+}
+
+.card-img-top {
+    width: 100%;
+    height: auto;
+    border-radius: 5px 5px 0 0;
+}
+
+.input-group {
+    width: 100%;
+}
+
+.btn-success {
+    border-radius: 0 5px 5px 0;
+}
+.row {
+    display: flex;
+    flex-wrap: wrap;
+    margin: -15px;
+}
+
+.card {
+   width: 30%;
+    margin: 15px;
+}
+/*----------------PAGE VALIDATION PANIER-----------------*/
+
+.container-valid-panier{
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    border-radius: 3px;
+    margin-top: 50px;
+    width: 50%;
+    margin-left: auto;
+    margin-right: auto;
+}
+.valid-panier{
+    padding: 0px 0 20px 20px;
+    /*haut droite bas gauche*/
+}
+#titreValidPanier{
+    font-size: 25px;
+    font-weight: 800;
+}
+#btnPasserCommande{
+    margin-top: 30px;
+}
+/*---------------------PAGE SHOW COMMANDES---------------*/
+
+.container-commandes{
+    margin-left: auto;
+    margin-right: auto;
+    margin-top: 50px;
+    width: 50%;
+}
+.table-commandes{
+    width: 100%;
+    text-align: center;
+}
+.table-commandes th {
+    padding: 5px;
+}
