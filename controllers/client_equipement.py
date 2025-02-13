@@ -31,7 +31,7 @@ def client_equipement_show():
     if 'filter_types' in session and session['filter_types']:
         type_placeholders = ', '.join(['%s'] * len(session['filter_types']))
         if type_placeholders:
-            query += " AND type_equipement_id IN ({})".format(type_placeholders)
+            query += " AND id_type_equipement_sport IN ({})".format(type_placeholders)
             params.extend(session['filter_types'])
 
     if 'filter_taille' in session and session['filter_taille']:
