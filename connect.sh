@@ -1,1 +1,1 @@
-mysql --user=login --password=secret --host=serveurmysql BDD_login
+mysql --user=emmanuel --password=mdp --host=localhost SAE543

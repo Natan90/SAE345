@@ -19,12 +19,12 @@
     {% if types_equipement | length >= 1 %}
         {% for ligne in types_equipement %}
            <tr>
-                  <td>{{ ligne.libelle }}</td>
+                  <td>{{ ligne.libelle_type_equipement_sport }}</td>
                   <td>{{ ligne.id_type_equipement }}</td>
                    <td><span style="color: red">{{ ligne.nbr_equipements }}</span></td>
                   <td>
-                      <a class="btn btn-outline-danger" href="/admin/type-equipement/edit?id_type_equipement={{ ligne.id_type_equipement }}">editer</a>&nbsp;
-                      <a class="btn btn-outline-warning" href="/admin/type-equipement/delete?id_type_equipement={{ ligne.id_type_equipement }}">supprimer</a>
+                      <a class="btn btn-outline-danger" href="/admin/type-equipement/edit?id_type_equipement={{ ligne.id_type_equipement_sport }}">editer</a>&nbsp;
+                      <a class="btn btn-outline-warning" href="/admin/type-equipement/delete?id_type_equipement={{ ligne.id_type_equipement_sport }}">supprimer</a>
                   </td>
            </tr>
         {% endfor %}

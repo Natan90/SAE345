@@ -32,7 +32,7 @@ equipements (tableau de dictionnaires)
                   <td>{{ ligne.nom }}</td>
                   <td>{{ ligne.id_equipement }}</td>
                   <td><span style="color: red">{{ ligne.libelle }}</span> ({{ ligne.type_equipement_id }})</td>
-                  <td>{#{ ligne.prix }#}  {{  "{:,.2f} €".format(ligne.prix) }}</td>
+                  <td>{#{ ligne.prix }#}  {{  "{:,.2f} €".format(ligne.prix_equipement) }}</td>
                   <td>
                   {% if ligne.stock is defined %}
                      {% if ligne.stock != None  %}

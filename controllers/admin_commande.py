@@ -27,7 +27,7 @@ def admin_commande_show():
     id_commande = request.args.get('id_commande', None)
     print(id_commande)
     if id_commande != None:
-        sql = '''    '''
+        sql = '''  SELECT * FROM COMMANDE WHERE   '''
         commande_adresses = []
     return render_template('admin/commandes/show.html'
                            , commandes=commandes
