@@ -102,13 +102,13 @@ def edit_equipement():
     id_equipement=request.args.get('id_equipement')
     mycursor = get_db().cursor()
     sql = '''
-    requête admin_equipement_6    
+    select * from EQUIPEMENT_SPORT where id_equipement = %s 
     '''
     mycursor.execute(sql, id_equipement)
     equipement = mycursor.fetchone()
     print(equipement)
     sql = '''
-    requête admin_equipement_7
+    select * from TYPE_EQUIPEMENT_SPORT
     '''
     mycursor.execute(sql)
     types_equipement = mycursor.fetchall()
