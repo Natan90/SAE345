@@ -2,6 +2,8 @@
 # -*- coding:utf-8 -*-
 from flask import Blueprint
 from flask import Flask, request, render_template, redirect, flash, session
+from datetime import datetime
+
 
 from connexion_db import get_db
 
@@ -17,33 +19,58 @@ def admin_index():
 @admin_commande.route('/admin/commande/show', methods=['get','post'])
 def admin_commande_show():
     mycursor = get_db().cursor()
+
     admin_id = session['id_user']
-    sql = '''SELECT UTILISATEUR.login, COMMANDE.date_achat, COUNT(LIGNE_COMMANDE.id_equipement) AS Nombre_equipements, 
-                        COUNT(LIGNE_COMMANDE.prix) AS prix_total, COMMANDE.id_etat
-             FROM COMMANDE
-             JOIN UTILISATEUR ON COMMANDE.id_utilisateur = UTILISATEUR.id_utilisateur
-             JOIN LIGNE_COMMANDE ON COMMANDE.id_commande = LIGNE_COMMANDE.id_commande
-             JOIN EQUIPEMENT_SPORT ON LIGNE_COMMANDE.id_equipement = EQUIPEMENT_SPORT.id_equipement
-             WHERE UTILISATEUR.id_utilisateur = %s
-             GROUP BY UTILISATEUR.login, COMMANDE.date_achat, LIGNE_COMMANDE.prix, COMMANDE.id_etat
-             ORDER BY COMMANDE.date_achat DESC'''
-    mycursor.execute(sql, (admin_id,))
-    commandes = mycursor.fetchall()
+    sql = '''SELECT * FROM LIGNE_PANIER WHERE LIGNE_PANIER.id_utilisateur = %s'''
+    mycursor.execute(sql, admin_id)
+    items_ligne_panier = mycursor.fetchall()
+    if items_ligne_panier is None or len(items_ligne_panier) < 1:
+        flash('Votre panier est vide',)
+        return redirect('/client/panier/show')
 
-    commandes=[]
+    date_commande= datetime.now().strftime('%Y-%m-%d %H:%M:%S')
+    tuple_insert = (date_commande, admin_id, "1")
+    sql = '''INSERT INTO COMMANDE (date_achat, id_utilisateur, id_etat) VALUES (%s, %s, %s)'''
+    mycursor.execute(sql, tuple_insert)
+    sql = '''SELECT last_insert_id() as last_insert_id'''
+    mycursor.execute(sql)
+    commande_id = mycursor.fetchone()
+    print(commande_id, tuple_insert)
+    print(items_ligne_panier)
+    print(admin_id)
+    print(commande_id['last_insert_id'])
+    print(commande_id)
 
-    equipements_commande = None
-    commande_adresses = None
-    id_commande = request.args.get('id_commande', None)
-    print(id_commande)
-    if id_commande != None:
-        sql = '''  SELECT * FROM COMMANDE WHERE   '''
-        commande_adresses = []
-    return render_template('admin/commandes/show.html'
-                           , commandes=commandes
-                           , equipements_commande=equipements_commande
-                           , commande_adresses=commande_adresses
-                           )
+    for item in items_ligne_panier:
+        sql = "DELETE FROM LIGNE_PANIER WHERE id_utilisateur = %s AND id_equipement =%s"
+        mycursor.execute(sql, admin_id, item['equipement_id'])
+        sql = "SELECT prix FROM EQUIPEMENT_SPORT WHERE id_equipement = %s"
+        mycursor.execute(sql, item['id_equipement'])
+        prix = mycursor.fetchone()
+        print(prix)
+        sql = "INSERT INTO LIGNE_COMMANDE (id_commande, id_equipement, prix, quantite) VALUES (%s, %s, %s, %s)"
+        tuple_insert = (commande_id['last_insert_id'], item['equipement_id'], prix['prix'], item['quantite'])
+        mycursor.execute(sql, tuple_insert)
+        get_db().commit()
+        id_client = session['id_user']
+        equipements_commande = None
+        commande_adresses = None
+        id_commande = request.args.get('id_commande', None)
+        print(id_commande)
+        if id_commande != None:
+            sql = ''' '''
+            commande_adresses = []
+        return render_template('admin/commandes/show.html'
+                               , equipements_commande=equipements_commande
+                               , commande_adresses=commande_adresses
+                               , id_commande=id_commande
+                               , id_client=id_client
+
+                               )
+
+
+
+
 
 
 @admin_commande.route('/admin/commande/valider', methods=['get','post'])

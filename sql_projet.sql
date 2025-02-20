@@ -107,7 +107,12 @@ INSERT INTO TYPE_EQUIPEMENT_SPORT (id_type_equipement_sport, libelle_type_equipe
     (2, 'Raquette'),
     (3, 'Vélo'),
     (4, 'Gant'),
-    (5, 'Filet');
+    (5, 'Filet'),
+    (6,'Masque'),
+    (7,'Palmes'),
+    (8,'Piolet'),
+    (9,'Patins'),
+    (10,'Altère');
 
 INSERT INTO UTILISATEUR (id_utilisateur, login, password, role, est_actif, nom, email) VALUES
     (1, 'admin', 'pbkdf2:sha256:600000$VQJnbWSkoyzKReNL$c510c74149e9eea7d47fd1242064dd8bcc2968555f41c107ba0da395ab160de2', 'ROLE_admin', 1, 'admin', 'admin@admin.fr'),
@@ -129,22 +134,22 @@ INSERT INTO TAILLE (id_taille, libelle_taille) VALUES
     (5, 'Très Très Grand');
 
 INSERT INTO EQUIPEMENT_SPORT (id_equipement, nom_equipement, prix_equipement, matiere, description, fournisseur, marque, poids, d_occasion, id_taille, id_type_equipement_sport, id_couleur, image, stock) VALUES
-    (1, 'Altère 15kg', 50.00, 'Acier', 'Altère de 15kg pour musculation', 'Decathlon', 'Domyos', 15.0, 0, 1, 1, 5, 'Altere_15Kg.png', 100),
-    (2, 'Altère 30kg', 90.00, 'Acier', 'Altère de 30kg pour musculation', 'Decathlon', 'Domyos', 30.0, 0, 2, 1, 5, 'Altere_30Kg.png', 100),
-    (3, 'Ballon Noir', 25.00, 'Cuir', 'Ballon de sport noir', 'Nike', 'Nike', 0.6, 0, 3, 2, 1, 'Ballon_noir.png', 100),
-    (4, 'Ballon Rouge', 25.00, 'Cuir', 'Ballon de sport rouge', 'Nike', 'Nike', 0.6, 0, 3, 2, 4, 'Ballon_rouge.png', 100),
+    (1, 'Altère 15kg', 50.00, 'Acier', 'Altère de 15kg pour musculation', 'Decathlon', 'Domyos', 15.0, 0, 1, 10, 5, 'Altere_15Kg.png', 100),
+    (2, 'Altère 30kg', 90.00, 'Acier', 'Altère de 30kg pour musculation', 'Decathlon', 'Domyos', 30.0, 0, 2, 10, 5, 'Altere_30Kg.png', 100),
+    (3, 'Ballon Noir', 25.00, 'Cuir', 'Ballon de sport noir', 'Nike', 'Nike', 0.6, 0, 3, 1, 5, 'Ballon_noir.png', 100),
+    (4, 'Ballon Rouge', 25.00, 'Cuir', 'Ballon de sport rouge', 'Nike', 'Nike', 0.6, 0, 3, 1, 1, 'Ballon_rouge.png', 100),
     (5, 'Gants de boxe Noirs', 40.00, 'Cuir', 'Gants de boxe noirs pour compétition', 'Everlast', 'Everlast', 0.4, 0, 3, 4, 5, 'Gants_Boxe_Noirs.png', 100),
-    (6, 'Gants de boxe Rouges', 40.00, 'Cuir', 'Gants de boxe rouges pour compétition', 'Everlast', 'Everlast', 0.4, 0, 3, 4, 4, 'Gants_Boxe_Rouges.png', 100),
-    (7, 'Masque de plongée Noir', 20.00, 'Silicone', 'Masque de plongée noir', 'Cressi', 'Cressi', 0.3, 0, 4, 3, 5, 'Masque_Plongee_Bleu.png', 100),
-    (8, 'Masque de plongée Transparent', 20.00, 'Silicone', 'Masque de plongée transparent', 'Cressi', 'Cressi', 0.3, 0, 4, 3, 3, 'Masque_Plongee_Noir.png', 100),
-    (9, 'Palmes Jaunes', 30.00, 'Plastique', 'Palmes jaunes pour natation', 'Arena', 'Arena', 0.5, 0, 4, 5, 4, 'Masque_Plongee_Transparent.png', 100),
-    (10, 'Palmes Noires', 30.00, 'Plastique', 'Palmes noires pour natation', 'Arena', 'Arena', 0.5, 0, 4, 5, 5, 'Palmes_Jaunes.png', 100),
-    (11, 'Palmes Vertes', 30.00, 'Plastique', 'Palmes vertes pour natation', 'Arena', 'Arena', 0.5, 0, 4, 5, 3, 'Palmes_Noirs.png', 100),
-    (12, 'Patins Noirs', 60.00, 'Cuir', 'Patins noirs pour patinage', 'Rollerblade', 'Rollerblade', 1.2, 0, 3, 3, 5, 'Palmes_Vert.png', 100),
-    (13, 'Piolet Bleu', 120.00, 'Métal', 'Piolet bleu pour alpinisme', 'Black Diamond', 'Black Diamond', 0.8, 0, 4, 4, 2, 'Patins_Noir.png', 100),
-    (14, 'Piolet Jaune', 120.00, 'Métal', 'Piolet jaune pour alpinisme', 'Black Diamond', 'Black Diamond', 0.8, 0, 4, 4, 4, 'Piolet_Bleu.png', 100),
-    (15, 'Piolet Noir', 120.00, 'Métal', 'Piolet noir pour alpinisme', 'Black Diamond', 'Black Diamond', 0.8, 0, 4, 4, 5, 'Piolet_Jaune.png', 100),
-    (16, 'Piolet Rouge', 120.00, 'Métal', 'Piolet rouge pour alpinisme', 'Black Diamond', 'Black Diamond', 0.8, 0, 4, 4, 4, 'Piolet_Rouge.png', 100),
+    (6, 'Gants de boxe Rouges', 40.00, 'Cuir', 'Gants de boxe rouges pour compétition', 'Everlast', 'Everlast', 0.4, 0, 3, 4, 1, 'Gants_Boxe_Rouges.png', 100),
+    (7, 'Masque de plongée Noir', 20.00, 'Silicone', 'Masque de plongée noir', 'Cressi', 'Cressi', 0.3, 0, 4, 6, 5, 'Masque_Plongee_Noir.png', 100),
+    (8, 'Masque de plongée Bleu', 20.00, 'Silicone', 'Masque de plongée transparent', 'Cressi', 'Cressi', 0.3, 0, 4, 6, 2, 'Masque_Plongee_Bleu.png', 100),
+    (9, 'Masque de plongée Transparent', 30.00, 'Plastique', 'Palmes jaunes pour natation', 'Arena', 'Arena', 0.5, 0, 4, 6, 5, 'Masque_Plongee_Transparent.png', 100),
+    (10, 'Palmes Jaunes', 30.00, 'Plastique', 'Palmes noires pour natation', 'Arena', 'Arena', 0.5, 0, 4, 7, 4, 'Palmes_Jaunes.png', 100),
+    (11, 'Palmes Noires', 30.00, 'Plastique', 'Palmes vertes pour natation', 'Arena', 'Arena', 0.5, 0, 4, 7, 5, 'Palmes_Noirs.png', 100),
+    (12, 'Palmes Vertes', 60.00, 'Cuir', 'Patins noirs pour patinage', 'Rollerblade', 'Rollerblade', 1.2, 0, 3, 7, 3, 'Palmes_Vert.png', 100),
+    (13, 'Patins Noirs', 120.00, 'Métal', 'Piolet bleu pour alpinisme', 'Black Diamond', 'Black Diamond', 0.8, 0, 4, 9, 5, 'Patins_Noir.png', 100),
+    (14, 'Piolet Bleu', 120.00, 'Métal', 'Piolet jaune pour alpinisme', 'Black Diamond', 'Black Diamond', 0.8, 0, 4, 8, 2, 'Piolet_Bleu.png', 100),
+    (15, 'Piolet Jaune', 120.00, 'Métal', 'Piolet noir pour alpinisme', 'Black Diamond', 'Black Diamond', 0.8, 0, 4, 8, 4, 'Piolet_Jaune.png', 100),
+    (16, 'Piolet Rouge', 120.00, 'Métal', 'Piolet rouge pour alpinisme', 'Black Diamond', 'Black Diamond', 0.8, 0, 4, 8, 1, 'Piolet_Rouge.png', 100),
     (17, 'Raquette de ping-pong Bleue', 35.00, 'Bois', 'Raquette bleue pour ping-pong', 'Cornilleau', 'Cornilleau', 0.3, 0, 3, 2, 2, 'Raquette_PingPong_Bleue.png', 100);
 
 INSERT INTO COMMANDE (id_commande, date_achat, id_utilisateur, id_etat) VALUES
