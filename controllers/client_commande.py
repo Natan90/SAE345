@@ -81,6 +81,20 @@ def client_commande_show():
     mycursor = get_db().cursor()
     id_client = session.get('id_user')
 
+    sql='''SELECT
+    COMMANDE.id_commande,
+    SUM(LIGNE_COMMANDE.quantite) AS total_equipements
+    FROM
+    COMMANDE
+    INNER JOIN
+    LIGNE_COMMANDE ON COMMANDE.id_commande = LIGNE_COMMANDE.id_commande
+    GROUP BY
+    COMMANDE.id_commande;'''
+
+    mycursor.execute(sql)
+    nbr_equipements = mycursor.fetchall()
+
+
     sql = '''
         SELECT 
             COMMANDE.id_commande, 
@@ -106,7 +120,9 @@ def client_commande_show():
     commande_adresses = None
 
     id_commande = request.args.get('id_commande', None)
+
     if id_commande:
+        print(str(id_commande) + "id_commande")
         sql = '''SELECT EQUIPEMENT_SPORT.nom_equipement AS nom, LIGNE_COMMANDE.quantite, LIGNE_COMMANDE.prix, (LIGNE_COMMANDE.quantite * LIGNE_COMMANDE.prix) AS prix_ligne
                 FROM LIGNE_COMMANDE
                 INNER JOIN EQUIPEMENT_SPORT ON LIGNE_COMMANDE.id_equipement = EQUIPEMENT_SPORT.id_equipement
@@ -116,10 +132,12 @@ def client_commande_show():
         equipement_sport_commande = mycursor.fetchall()
 
         commande_adresses = []
+        print(nbr_equipements)
 
     return render_template('client/commandes/show.html',
                            commandes=commandes,
                            equipement_sport_commande=equipement_sport_commande,
-                           commande_adresses=commande_adresses
+                           commande_adresses=commande_adresses,
+                           nbr_equipements=nbr_equipements
                            )
 
