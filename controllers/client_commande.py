@@ -15,7 +15,7 @@ def client_commande_valide():
     sql = ''' selection des equipement_sport d'un panier '''
     equipement_sport_panier = []
     if len(equipement_sport_panier) >= 1:
-        sql = ''' calcul du prix total du panier '''
+        sql = ''''''
         prix_total = None
     else:
         prix_total = None
@@ -81,20 +81,6 @@ def client_commande_show():
     mycursor = get_db().cursor()
     id_client = session.get('id_user')
 
-    sql='''SELECT
-    COMMANDE.id_commande,
-    SUM(LIGNE_COMMANDE.quantite) AS total_equipements
-    FROM
-    COMMANDE
-    INNER JOIN
-    LIGNE_COMMANDE ON COMMANDE.id_commande = LIGNE_COMMANDE.id_commande
-    GROUP BY
-    COMMANDE.id_commande;'''
-
-    mycursor.execute(sql)
-    nbr_equipements = mycursor.fetchall()
-
-
     sql = '''
         SELECT 
             COMMANDE.id_commande, 
@@ -131,13 +117,15 @@ def client_commande_show():
         mycursor.execute(sql, (id_commande,))
         equipement_sport_commande = mycursor.fetchall()
 
+
         commande_adresses = []
-        print(nbr_equipements)
+
+        print(equipement_sport_commande)
+
 
     return render_template('client/commandes/show.html',
                            commandes=commandes,
                            equipement_sport_commande=equipement_sport_commande,
                            commande_adresses=commande_adresses,
-                           nbr_equipements=nbr_equipements
                            )
 
