@@ -8,7 +8,7 @@ id_equipement, nom, type_equipement_id, prix, image
 
 types_equipement : tableau de dictionnaires
 * tableau de "type_equipement"
-    * id_type_equipement, libelle
+    * id_type_equipement_sport, libelle
 #}
 
 {% extends 'admin/layout_admin.html' %}
@@ -26,10 +26,10 @@ types_equipement : tableau de dictionnaires
                 <form class="w-190" method="post" action="/admin/equipement/edit" enctype="multipart/form-data">
                     <input type="hidden" value="{{ equipement.id_equipement }}" name="id_equipement">
                     <label for="nom">Nom :
-                        <input name="nom" type="text" value="{{ equipement.nom }}" class="form-control">
+                        <input name="nom" type="text" value="{{ equipement.nom_equipement }}" class="form-control">
                     </label>
                     <label for="prix" > Prix (€) :
-                        <input name="prix" type="number" min="0.0" step="0.01" value="{{ equipement.prix }}" class="form-control" >
+                        <input name="prix" type="number" min="0.0" step="0.01" value="{{ equipement.prix_equipement }}" class="form-control" >
                     </label>
                     <label for="image">Image :                       {# à modifier #}
                         <input name="image"  onchange="loadFile(event)" type="file" class="form-control" value="{{ equipement.image }}">             {# à modifier #}
@@ -39,7 +39,7 @@ types_equipement : tableau de dictionnaires
                 <label for="type_equipement_id">Type de l'equipement :
                     <select name="type_equipement_id" class="form-select">
                             {% for type in types_equipement %}
-                                 <option value="{{ type.id_type_equipement }}" {% if type.id_type_equipement == equipement.type_equipement_id %} selected {% endif %}> {{ type.libelle }}</option>
+                                 <option value="{{ type.id_type_equipement_sport }}" {% if type.id_type_equipement_sport == equipement.id_type_equipement_sport %} selected {% endif %}> {{ type.libelle_type_equipement_sport }}</option>
                             {% endfor %}
                         </select>
                     </label>
