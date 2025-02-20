@@ -18,7 +18,7 @@ def client_equipement_show():
 
     if 'filter_word' in session and session['filter_word']:
         query += " AND nom_equipement LIKE %s"
-        params.append("%{}%".format(session['filter_word']))
+        params.append(f"%{session['filter_word']}%")
 
     if 'filter_prix_min' in session and session['filter_prix_min']:
         query += " AND prix_equipement >= %s"
@@ -29,10 +29,14 @@ def client_equipement_show():
         params.append(session['filter_prix_max'])
 
     if 'filter_types' in session and session['filter_types']:
-        type_placeholders = ', '.join(['%s'] * len(session['filter_types']))
-        if type_placeholders:
-            query += " AND id_type_equipement_sport IN ({})".format(type_placeholders)
-            params.extend(session['filter_types'])
+        try:
+            filter_types = [int(x) for x in session['filter_types']]
+            if filter_types:
+                type_placeholders = ', '.join(['%s'] * len(filter_types))
+                query += f" AND id_type_equipement_sport IN ({type_placeholders})"
+                params.extend(filter_types)
+        except ValueError:
+            session['filter_types'] = []
 
     if 'filter_taille' in session and session['filter_taille']:
         query += " AND taille_id = %s"
@@ -44,22 +48,29 @@ def client_equipement_show():
     mycursor.execute("SELECT * FROM TYPE_EQUIPEMENT_SPORT")
     types_equipement = mycursor.fetchall()
 
-    id_client = session['id_user']
+    id_client = session.get('id_user')
+    if id_client:
+        sql = """SELECT EQUIPEMENT_SPORT.nom_equipement AS nom, 
+                        EQUIPEMENT_SPORT.prix_equipement AS prix, 
+                        LIGNE_PANIER.quantite, 
+                        EQUIPEMENT_SPORT.id_equipement, 
+                        COALESCE(EQUIPEMENT_SPORT.stock, 0) AS stock 
+                 FROM LIGNE_PANIER 
+                 JOIN EQUIPEMENT_SPORT ON LIGNE_PANIER.id_equipement = EQUIPEMENT_SPORT.id_equipement 
+                 WHERE LIGNE_PANIER.id_utilisateur = %s"""
+        mycursor.execute(sql, (id_client,))
+        equipements_panier = mycursor.fetchall()
 
-    sql = "SELECT EQUIPEMENT_SPORT.nom_equipement AS nom, EQUIPEMENT_SPORT.prix_equipement AS prix, LIGNE_PANIER.quantite, EQUIPEMENT_SPORT.id_equipement, COALESCE(EQUIPEMENT_SPORT.stock, 0) AS stock FROM LIGNE_PANIER JOIN EQUIPEMENT_SPORT ON LIGNE_PANIER.id_equipement = EQUIPEMENT_SPORT.id_equipement WHERE LIGNE_PANIER.id_utilisateur = %s"
+        for equipement in equipements_panier:
+            equipement['stock'] = equipement['stock'] if equipement['stock'] is not None else 0
 
-
-    mycursor.execute(sql, (id_client,))
-    equipements_panier = mycursor.fetchall()
-    for equipement in equipements_panier:
-        equipement['stock'] = equipement['stock'] if equipement['stock'] is not None else 0
-
-    prix_total = sum(item['quantite'] * item['prix'] for item in equipements_panier)
+        prix_total = sum(item['quantite'] * item['prix'] for item in equipements_panier)
+    else:
+        equipements_panier = []
+        prix_total = 0
 
     return render_template('client/boutique/panier_equipement.html',
                            equipements=equipements,
                            equipements_panier=equipements_panier,
                            items_filtre=types_equipement,
                            prix_total=prix_total)
-
-
