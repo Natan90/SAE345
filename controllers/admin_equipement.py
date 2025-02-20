@@ -122,7 +122,7 @@ def edit_equipement():
     return render_template('admin/equipement/edit_equipement.html'
                            ,equipement=equipement
                            ,types_equipement=types_equipement
-                         #  ,declinaisons_equipement=declinaisons_equipement
+                           #,declinaisons_equipement=declinaisons_equipement
                            )
 
 
