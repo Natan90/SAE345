@@ -69,6 +69,7 @@ def client_equipement_show():
         equipements_panier = []
         prix_total = 0
 
+
     return render_template('client/boutique/panier_equipement.html',
                            equipements=equipements,
                            equipements_panier=equipements_panier,
