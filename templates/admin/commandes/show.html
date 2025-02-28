@@ -2,54 +2,45 @@
 {% block body %}
     <div class="container-fluid">
         {% if equipements_commande %}
-            <h3>Recapitulatifs de la commande selectionnée</h3>
+            <h3>Récapitulatif de la commande sélectionnée</h3>
             <table class="table">
                 <thead class="thead-dark">
-                    <tr><th>Nom</th><th>Quantite</th><th>Prix</th><th>Prix total</th></tr>
+                    <tr><th>Nom</th><th>Quantité</th><th>Prix</th><th>Prix total</th></tr>
                 </thead>
                 <tbody>
-                        {% for ligne in equipements_commande %}
-                             <tr>
-                                <td>{{ ligne.nom }}
-                                {% if ligne.nb_declinaisons is defined and ligne.nb_declinaisons > 1 %}
-                                    <span style="color:rgba(255,197,197,0.6);"> ( {{ ligne.nb_declinaisons }} declinaisons )</span>
-                                    <span style="color:#6dcea2">
-                                    {% if ligne.couleur_id != 1 %}
-                                        {{ ligne.libelle_couleur }}
-                                    {% endif %}
-                                    </span>
-                                    <span  style="color:#d941c2">
-                                    {% if ligne.taille_id != 1 %}
-                                        {{ ligne.libelle_taille }}
-                                    {% endif %}
-                                    </span>
+                    {% for ligne in equipements_commande %}
+                        <tr>
+                            <td>{{ ligne.nom }}
+                            {% if ligne.nb_declinaisons is defined and ligne.nb_declinaisons > 1 %}
+                                <span style="color:rgba(255,197,197,0.6);"> ( {{ ligne.nb_declinaisons }} déclinaisons )</span>
+                                <span style="color:#6dcea2">
+                                {% if ligne.couleur_id != 1 %}
+                                    {{ ligne.libelle_couleur }}
                                 {% endif %}
-                                </td>
-                                <td>{{ ligne.quantite }}</td>
-                                <td>{{ ligne.prix }} €</td>
-                                <td>{{ ligne.prix_ligne }} €  </td>
-                            </tr>
-                        {% endfor %}
-
+                                </span>
+                                <span style="color:#d941c2">
+                                {% if ligne.taille_id != 1 %}
+                                    {{ ligne.libelle_taille }}
+                                {% endif %}
+                                </span>
+                            {% endif %}
+                            </td>
+                            <td>{{ ligne.quantite }}</td>
+                            <td>{{ ligne.prix }} €</td>
+                            <td>{{ ligne.prix_ligne }} €</td>
+                        </tr>
+                    {% endfor %}
                 </tbody>
             </table>
-               <br>
-                <div style="color: brown">
-                <strong>adresse livraison : </strong>{{ commande_adresses.nom_livraison }} {{ commande_adresses.rue_livraison }} {{ commande_adresses.code_postal_livraison }} {{ commande_adresses.ville_livraison }}
-                <br>
-                <strong>adresse facturation : </strong>
-                {% if commande_adresses.adresse_identique == 'adresse_identique' %}
-                    adresse identique
-                {% else %}
-                    {{ commande_adresses.nom_facturation }} {{ commande_adresses.rue_facturation }} {{ commande_adresses.code_postal_facturation }} {{ commande_adresses.ville_facturation }}
-                {% endif %}
-                </div>
+            <br>
 
             {% if equipements_commande[0].etat_id == 1 %}
-            <form action="/admin/commande/valider"  style="display: inline-block;"  method="post">
-                  <input type="hidden" name="idCommande" value="{{ equipements_commande[0].id }}">
-                  <button class="btn btn-primary" > Valider (Expédier) </button>
+            <form action="/admin/commande/valider" style="display: inline-block;" method="post">
+                  <input type="hidden" name="id_commande" value="{{ equipements_commande[0].id }}">
+                  <button class="btn btn-primary"> Valider (Expédier) </button>
             </form>
+            {% elif equipements_commande[0].etat_id == 3 %}
+            <button class="btn btn-success"> Expédiée </button>
             {% endif %}
             <hr>
         {% endif %}
@@ -63,11 +54,11 @@
                     <table class="table my-0" id="dataTable">
                         <thead>
                         <tr>
-                            <th>login client</th>
+                            <th>Login client</th>
                             <th>Date de commande</th>
-                            <th>Nombre d'equipements</th>
+                            <th>Nombre d'équipements</th>
                             <th>Coût total</th>
-                            <th>Etat de la commande</th>
+                            <th>État de la commande</th>
                             <th style="text-align: center;">Options</th>
                         </tr>
                         </thead>
@@ -78,16 +69,20 @@
                                 <td>{{ commande.date_achat.strftime('%d-%m-%Y') }}</td>
                                 <td> {{ commande.nbr_equipements }} </td>
                                 <td>
-                                    {{ commande.prix_total }}
+                                    {{ commande.prix_total }} €
                                 </td>
                                 <td> {{ commande.libelle }}</td>
                                 <td style="text-align: center;">
-                                    <form action="/admin/commande/valider" style="display: inline-block;"  method="post">
+                                    {% if commande.etat_id == 1 %}
+                                    <form action="/admin/commande/valider" style="display: inline-block;" method="post">
                                         <input type="hidden" name="id_commande" value="{{ commande.id_commande }}">
-                                        <button class="btn btn-primary" > Valider (Expédier) </button>
+                                        <button class="btn btn-primary"> Valider (Expédier) </button>
                                     </form>
+                                    {% elif commande.etat_id == 3 %}
+                                    <button class="btn btn-success"> Expédiée </button>
+                                    {% endif %}
                                     <a href="/admin/commande/show?id_commande={{ commande.id_commande }}">
-                                        <button class="btn btn-primary" > Details </button>
+                                        <button class="btn btn-primary"> Détails </button>
                                     </a>
                                 </td>
                             </tr>
@@ -96,9 +91,6 @@
                     </table>
                 </div>
             </div>
-
-
-        </div>
         </div>
     </div>
 {% endblock %}
