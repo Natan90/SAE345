@@ -20,7 +20,7 @@ types_equipement : tableau de dictionnaires
     <h2>modifier un equipement</h2>
         <div class="row mt-5">
         {%  if equipement.image is not none %}
-            <img class="card-img-top rounded mx-4 d-block"  style="width:200px; height:200px; border: 1px solid black; padding: 25px;"   id="img_output" src="{{ url_for('static', filename = 'images/') }}{{ equipement.image}}"  alt="image  de {{ equipement.nom }}" >
+            <img class="card-img-top rounded mx-4 d-block"  style="width:200px; height:200px; border: 1px solid black; padding: 25px;"   id="img_output" src="{{ url_for('static', filename = 'images/') }}{{ equipement.image}}"  alt="image  de {{ equipement.nom_equipement }}" >
         {% endif %}
             <div class="w-25">
                 <form class="w-190" method="post" action="/admin/equipement/edit" enctype="multipart/form-data">

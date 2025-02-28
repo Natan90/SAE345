@@ -29,9 +29,9 @@ equipements (tableau de dictionnaires)
     {% if equipements | length >= 1 %}
         {% for ligne in equipements %}
            <tr>
-                  <td>{{ ligne.nom }}</td>
+                  <td>{{ ligne.nom_equipement }}</td>
                   <td>{{ ligne.id_equipement }}</td>
-                  <td><span style="color: red">{{ ligne.libelle }}</span> ({{ ligne.type_equipement_id }})</td>
+                  <td><span style="color: red">{{ ligne.libelle }}</span> ({{ ligne.id_type_equipement_sport }})</td>
                   <td>{#{ ligne.prix }#}  {{  "{:,.2f} €".format(ligne.prix_equipement) }}</td>
                   <td>
                   {% if ligne.stock is defined %}

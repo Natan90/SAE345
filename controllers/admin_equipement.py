@@ -21,6 +21,7 @@ def show_equipement():
     '''
     mycursor.execute(sql)
     equipements = mycursor.fetchall()
+    print(equipements)
     return render_template('admin/equipement/show_equipement.html', equipements=equipements)
 
 
@@ -71,28 +72,40 @@ def valid_add_equipement():
 def delete_equipement():
     id_equipement=request.args.get('id_equipement')
     mycursor = get_db().cursor()
+    """
     sql = ''' requête admin_equipement_3 '''
     mycursor.execute(sql, id_equipement)
     nb_declinaison = mycursor.fetchone()
     if nb_declinaison['nb_declinaison'] > 0:
         message= u'il y a des declinaisons dans cet equipement : vous ne pouvez pas le supprimer'
         flash(message, 'alert-warning')
+    
     else:
-        sql = ''' requête admin_equipement_4 '''
-        mycursor.execute(sql, id_equipement)
-        equipement = mycursor.fetchone()
-        print(equipement)
-        image = equipement['image']
+    """
+    sql = ''' SELECT COUNT(id_commande) as nbr_dep FROM LIGNE_COMMANDE WHERE id_equipement = %s'''
+    mycursor.execute(sql, id_equipement)
+    nombre_dependences_commandes = mycursor.fetchone()
+    print(nombre_dependences_commandes['nbr_dep']," <- RESULTS")
+    if  nombre_dependences_commandes['nbr_dep'] > 0:
+        flash("Il y a {} dépendence(s)".format(nombre_dependences_commandes['nbr_dep']))
+        return redirect("/admin/equipement/show")
+    sql = ''' SELECT image FROM EQUIPEMENT_SPORT WHERE id_equipement = %s'''
+    mycursor.execute(sql, id_equipement)
+    equipement = mycursor.fetchone()
+    print(equipement)
 
-        sql = ''' requête admin_equipement_5  '''
-        mycursor.execute(sql, id_equipement)
-        get_db().commit()
-        if image != None:
-            os.remove('static/images/' + image)
+    image = equipement['image']
+    sql = ''' DELETE FROM EQUIPEMENT_SPORT WHERE id_equipement=%s '''
+    mycursor.execute(sql, id_equipement)
+    get_db().commit()
 
-        print("un equipement supprimé, id :", id_equipement)
-        message = u'un equipement supprimé, id : ' + id_equipement
-        flash(message, 'alert-success')
+
+    #if image != None:
+        #os.remove('static/images/' + image) # évite de supprimer l'image pour l'instant
+
+    print("un equipement supprimé, id :", id_equipement)
+    message = u'un equipement supprimé, id : ' + id_equipement
+    flash(message, 'alert-success')
 
     return redirect('/admin/equipement/show')
 
@@ -136,22 +149,25 @@ def valid_edit_equipement():
     prix = request.form.get('prix', '')
     description = request.form.get('description')
     sql = '''
-       requête admin_equipement_8
+        select image from EQUIPEMENT_SPORT where id_equipement = %s 
        '''
     mycursor.execute(sql, id_equipement)
     image_nom = mycursor.fetchone()
     image_nom = image_nom['image']
     if image:
-        if image_nom != "" and image_nom is not None and os.path.exists(
-                os.path.join(os.getcwd() + "/static/images/", image_nom)):
-            os.remove(os.path.join(os.getcwd() + "/static/images/", image_nom))
+        #if image_nom != "" and image_nom is not None and os.path.exists(
+                #os.path.join(os.getcwd() + "/static/images/", image_nom)):
+                #os.remove(os.path.join(os.getcwd() + "/static/images/", image_nom))
         # filename = secure_filename(image.filename)
         if image:
             filename = 'img_upload_' + str(int(2147483647 * random())) + '.png'
             image.save(os.path.join('static/images/', filename))
             image_nom = filename
 
-    sql = '''  requête admin_equipement_9 '''
+    sql = '''          
+       UPDATE EQUIPEMENT_SPORT 
+       SET nom_equipement=%s,image=%s,prix_equipement=%s,id_type_equipement_sport=%s,description=%s
+       WHERE id_equipement=%s  '''
     mycursor.execute(sql, (nom, image_nom, prix, type_equipement_id, description, id_equipement))
 
     get_db().commit()
