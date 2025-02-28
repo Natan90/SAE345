@@ -24,7 +24,7 @@
                     <select name="type_equipement_id" required class="form-select">
                         <option value="">Sélectionner un type d'equipement</option>
                         {% for type in types_equipement %}
-                             <option value="{{ type.id_type_equipement }}"> {{ type.libelle }}</option>
+                             <option value="{{ type.id_type_equipement_sport }}"> {{ type.libelle_type_equipement_sport }}</option>
                         {% endfor %}
                     </select>
                 </label>

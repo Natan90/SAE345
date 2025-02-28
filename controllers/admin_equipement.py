@@ -28,9 +28,11 @@ def show_equipement():
 @admin_equipement.route('/admin/equipement/add', methods=['GET'])
 def add_equipement():
     mycursor = get_db().cursor()
-
+    sql=''' SELECT * FROM TYPE_EQUIPEMENT_SPORT'''
+    mycursor.execute(sql)
+    type_equipement = mycursor.fetchall()
     return render_template('admin/equipement/add_equipement.html'
-                           #,types_equipement=type_equipement,
+                           ,types_equipement=type_equipement,
                            #,couleurs=colors
                            #,tailles=tailles
                             )
@@ -53,7 +55,9 @@ def valid_add_equipement():
         print("erreur")
         filename=None
 
-    sql = '''  requête admin_equipement_2 '''
+    sql = '''  INSERT INTO 
+    EQUIPEMENT_SPORT (id_equipement,nom_equipement,image,prix_equipement,id_type_equipement_sport,description,id_taille,id_couleur) 
+    VALUES (NULL,%s,%s,%s,%s,%s,1,1) '''
 
     tuple_add = (nom, filename, prix, type_equipement_id, description)
     print(tuple_add)
