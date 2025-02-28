@@ -2,7 +2,6 @@ connexion_db.py
 
 sae345.env
 
-.idea/
 __pycache__/
 controllers/__pycache__/admin_declinaison_equipement.cpython-312.pyc
 controllers/__pycache__/admin_equipement.cpython-312.pyc
