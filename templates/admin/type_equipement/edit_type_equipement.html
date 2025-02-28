@@ -12,10 +12,10 @@
     <fieldset>
         <legend> Modifier un type d'equipement</legend>
         <div class="mb-3">
-        <input type="hidden" name="id_type_equipement" size="18" value="{{ type_equipement.id_type_equipement }}" id="id">
+        <input type="hidden" name="id_type_equipement" size="18" value="{{ type_equipement.id_type_equipement_sport }}" id="id">
         <label for="libelle">libellé</label><br>
 
-        <input class="form-select" type="text" name="libelle" size="18" value="{{ type_equipement.libelle }}" id="libelle"><br>
+        <input class="form-select" type="text" name="libelle" size="18" value="{{ type_equipement.libelle_type_equipement_sport }}" id="libelle"><br>
         </div>
         <div class="col-12">
         <button class="btn btn-primary" type="submit">Valider</button>
