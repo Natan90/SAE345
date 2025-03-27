@@ -29,7 +29,7 @@ def admin_commande_show():
         JOIN UTILISATEUR U ON C.id_utilisateur = U.id_utilisateur
         JOIN LIGNE_COMMANDE LC ON C.id_commande = LC.id_commande
         JOIN ETAT E ON C.id_etat = E.id_etat
-        GROUP BY C.id_commande
+        GROUP BY C.id_commande,C.date_achat,U.login, C.date_achat, C.id_commande, E.libelle_etat
         ORDER BY C.date_achat DESC;
     '''
     mycursor.execute(sql)
